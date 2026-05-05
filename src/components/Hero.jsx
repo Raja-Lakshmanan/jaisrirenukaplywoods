@@ -1,0 +1,118 @@
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { FaPhoneAlt, FaWhatsapp } from 'react-icons/fa'
+
+const premiumTransition = {
+  duration: 0.65,
+  ease: [0.22, 1, 0.36, 1],
+}
+
+const doorSpring = {
+  stiffness: 72,
+  damping: 24,
+  mass: 0.72,
+}
+
+function Hero() {
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+  const leftDoorRotate = useSpring(useTransform(scrollYProgress, [0, 0.18], [0, -72]), doorSpring)
+  const rightDoorRotate = useSpring(useTransform(scrollYProgress, [0, 0.18], [0, 72]), doorSpring)
+  const leftDoorX = useSpring(useTransform(scrollYProgress, [0, 0.18], ['0%', '-72%']), doorSpring)
+  const rightDoorX = useSpring(useTransform(scrollYProgress, [0, 0.18], ['0%', '72%']), doorSpring)
+  const doorOpacity = useSpring(useTransform(scrollYProgress, [0.12, 0.28], [1, 0]), doorSpring)
+  const revealOpacity = useSpring(useTransform(scrollYProgress, [0.16, 0.32], [0, 1]), doorSpring)
+  const revealY = useSpring(useTransform(scrollYProgress, [0.16, 0.32], [24, 0]), doorSpring)
+  const lightScale = useSpring(useTransform(scrollYProgress, [0, 0.24], [0.86, 1.14]), doorSpring)
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 620px)').matches)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 620px)')
+    const updateMobileState = (event) => setIsMobile(event.matches)
+
+    mediaQuery.addEventListener('change', updateMobileState)
+    return () => mediaQuery.removeEventListener('change', updateMobileState)
+  }, [])
+
+  return (
+    <section id="home" className="hero-section hero-wrapper section" ref={heroRef}>
+      <div className="hero-bg-texture" />
+
+      <div className="container hero-content">
+        <motion.div
+          className="hero-text"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...premiumTransition, duration: 0.85 }}
+        >
+          <p className="eyebrow">Premium Materials for Modern Interiors</p>
+          <h1>Premium Plywoods &amp; Interior Materials</h1>
+          <p>
+            Quality plywood, laminates, doors, MDF boards, and interior solutions for homes, offices,
+            and commercial spaces.
+          </p>
+          <div className="hero-actions">
+            <a href="tel:+919894017095" className="btn btn-gold">
+              <FaPhoneAlt />
+              Call Now
+            </a>
+            <a href="https://wa.me/919894017095" className="btn btn-outline" target="_blank" rel="noreferrer">
+              <FaWhatsapp />
+              WhatsApp
+            </a>
+            <a href="#products" className="btn btn-light">
+              View Products
+            </a>
+          </div>
+        </motion.div>
+
+        <div className="premium-door-scene">
+          <motion.div className="warm-light" style={{ scale: lightScale, opacity: revealOpacity }} aria-hidden="true" />
+          <motion.div className="showroom-glow" style={{ opacity: revealOpacity, y: revealY }} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </motion.div>
+          <div className="door-frame door-scene">
+            <div className="door-reveal-content">
+              <h3>Jai Sri Renuka Plywoods</h3>
+              <p>Premium Plywood &amp; Interior Solutions</p>
+            </div>
+            <motion.div
+              className="door-panel left-door"
+              style={isMobile ? { x: leftDoorX, opacity: doorOpacity } : { rotateY: leftDoorRotate, opacity: doorOpacity }}
+            >
+              <div className="door-inset" />
+              <div className="door-verticals">
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="door-handle left-handle" />
+            </motion.div>
+            <motion.div
+              className="door-panel right-door"
+              style={isMobile ? { x: rightDoorX, opacity: doorOpacity } : { rotateY: rightDoorRotate, opacity: doorOpacity }}
+            >
+              <div className="door-inset" />
+              <div className="door-verticals">
+                <span />
+                <span />
+                <span />
+              </div>
+              <div className="door-handle right-handle" />
+            </motion.div>
+          </div>
+          <div className="scroll-indicator" aria-hidden="true">
+            <span />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Hero
