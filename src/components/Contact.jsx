@@ -1,7 +1,7 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
 
 const premiumTransition = {
@@ -11,29 +11,85 @@ const premiumTransition = {
 
 function Contact() {
   const form = useRef();
+  const toastTimer = useRef(null);
+  const [selectedBranchIndex, setSelectedBranchIndex] = useState(0);
+  const [toast, setToast] = useState(null);
+  const [sending, setSending] = useState(false);
+
+  const branches = [
+    {
+      name: 'Main Branch',
+      address: '251, Nadar Lane, North Perumal Maistry Street, West Masi Street, Madurai-625001',
+      iframeSrc: 'https://www.google.com/maps?q=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001&z=17&output=embed',
+      openLink: 'https://www.google.com/maps/search/?api=1&query=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001',
+    },
+    {
+      name: 'West Masi Branch',
+      address: '251, N Perumal Maistry St, W Masi St, Madurai Main, Madurai, Tamil Nadu 625001',
+      iframeSrc: 'https://www.google.com/maps?q=251,N%20Perumal%20Maistry%20St,W%20Masi%20St,Madurai%20Main,Madurai,Tamil%20Nadu%20625001&z=17&output=embed',
+      openLink: 'https://maps.app.goo.gl/SjPoJDsdGqBD1Vci8?g_st=aw',
+    },
+    {
+      name: 'Arappalayam Branch',
+      address: 'NO 17, Salem - Madurai Rd, Puttuthoppu, Arappalayam, Madurai, Tamil Nadu 625016',
+      iframeSrc: 'https://www.google.com/maps?q=NO%2017,Salem%20-%20Madurai%20Rd,Puttuthoppu,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
+      openLink: 'https://maps.app.goo.gl/EhrW3agDbxy7uvNc7?g_st=aw',
+    },
+  ];
+
+  const selectedBranch = branches[selectedBranchIndex];
+  const isMobileToast = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+  const toastAnimation = isMobileToast
+    ? {
+      initial: { opacity: 0, y: 36 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: 36 },
+    }
+    : {
+      initial: { opacity: 0, x: 80, y: 20 },
+      animate: { opacity: 1, x: 0, y: 0 },
+      exit: { opacity: 0, x: 80, y: 20 },
+    };
+
+  const showToast = (type, message) => {
+    if (toastTimer.current) {
+      clearTimeout(toastTimer.current);
+    }
+    setToast({ type, message });
+    toastTimer.current = setTimeout(() => setToast(null), 3000);
+  };
+
+  const goToBranch = (direction) => {
+    setSelectedBranchIndex((currentIndex) => (
+      (currentIndex + direction + branches.length) % branches.length
+    ));
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
+    setSending(true);
 
     emailjs
       .sendForm(
-        'service_ebi8347',     // ✅ Your Service ID
-        'template_7otqo4s',    // ✅ Your Template ID
+        'service_ebi8347',     // Your Service ID
+        'template_7otqo4s',    // Your Template ID
         form.current,
-        'P4delT29XxokSszZU'    // ✅ Your Public Key
+        'P4delT29XxokSszZU'    // Your Public Key
       )
       .then(
         (result) => {
           console.log('Message sent:', result.text);
-          alert('✅ Message sent successfully!');
+          showToast('success', 'Enquiry sent successfully! We will contact you soon.');
           e.target.reset(); // Clear form after sending
         },
         (error) => {
           console.error('Error:', error.text);
-          alert('❌ Failed to send message. Please try again later.');
+          showToast('error', 'Something went wrong. Please try again or contact us on WhatsApp.');
         }
-      );
+      )
+      .finally(() => setSending(false));
   };
+
   return (
     <section id="contact" className="section">
       <div className="container contact-grid">
@@ -60,17 +116,78 @@ function Contact() {
           <a href="https://wa.me/919894017095" className="btn btn-gold" target="_blank" rel="noreferrer">
             <FaWhatsapp /> Chat on WhatsApp
           </a>
-          <div className="map-placeholder">
-            <iframe
-              title="Jai Sri Renuka Plywoods location map"
-              src="https://www.google.com/maps?q=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001&z=17&output=embed"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
+          <div className="map-placeholder branch-map-card">
+            <div className="branch-map-viewport">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedBranch.name}
+                  className="branch-map-slide"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.16}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -70) goToBranch(1);
+                    if (info.offset.x > 70) goToBranch(-1);
+                  }}
+                  initial={{ opacity: 0, x: 28 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -28 }}
+                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <iframe
+                    title={`${selectedBranch.name} location map`}
+                    src={selectedBranch.iframeSrc}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </motion.div>
+              </AnimatePresence>
+              <button
+                className="map-arrow map-arrow-prev"
+                type="button"
+                aria-label="Previous branch map"
+                onClick={() => goToBranch(-1)}
+              >
+                ‹
+              </button>
+              <button
+                className="map-arrow map-arrow-next"
+                type="button"
+                aria-label="Next branch map"
+                onClick={() => goToBranch(1)}
+              >
+                ›
+              </button>
+            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`${selectedBranch.name}-address`}
+                className="branch-address"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <strong>{selectedBranch.name}</strong>
+                <p>{selectedBranch.address}</p>
+              </motion.div>
+            </AnimatePresence>
+            <div className="branch-map-dots" aria-label="Branch map selector">
+              {branches.map((branch, index) => (
+                <button
+                  key={branch.name}
+                  type="button"
+                  className={index === selectedBranchIndex ? 'active' : ''}
+                  aria-label={`Show ${branch.name}`}
+                  aria-current={index === selectedBranchIndex}
+                  onClick={() => setSelectedBranchIndex(index)}
+                />
+              ))}
+            </div>
           </div>
           <a
-            href="https://www.google.com/maps/search/?api=1&query=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001"
+            href={selectedBranch.openLink}
             className="btn btn-outline map-open-btn"
             target="_blank"
             rel="noreferrer"
@@ -88,17 +205,53 @@ function Contact() {
           transition={{ ...premiumTransition, delay: 0.08 }}
           onSubmit={sendEmail}
         >
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" name='name' placeholder="Enter your name" required />
-          <label htmlFor="email">Email</label>
-          <input id="email" type="email" name='email' placeholder="Enter Email Address" required />
-          <label htmlFor="message">Message</label>
-          <textarea id="message" rows="5" type='text' name='message' placeholder="Tell us your requirement" required />
-          <button type="submit" className="btn btn-gold">
-            Send Enquiry
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input id="name" type="text" name='name' placeholder="Enter your name" required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input id="email" type="email" name='email' placeholder="Enter Email Address" required />
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="message">Message</label>
+            <textarea id="message" rows="5" type='text' name='message' placeholder="Tell us your requirement" required />
+          </div>
+          <button type="submit" className="btn btn-gold" disabled={sending}>
+            {sending ? 'Sending...' : 'Send Enquiry'}
           </button>
+          <div className="contact-helper desktop-only">
+            <span className="helper-badge">Expert Assistance</span>
+            <h4>Need help choosing the right material?</h4>
+            <p>
+              Share your requirement and our team will guide you with suitable plywood,
+              laminates, doors, MDF boards, and interior materials.
+            </p>
+            <div className="helper-points">
+              <span>Product Guidance</span>
+              <span>Quick Quotation</span>
+              <span>Delivery Support</span>
+            </div>
+            <a href="https://wa.me/919894017095" target="_blank" rel="noreferrer">
+              Need urgent help? Chat on WhatsApp
+            </a>
+          </div>
         </motion.form>
       </div>
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            className={`toast-message ${toast.type}`}
+            {...toastAnimation}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span>{toast.type === 'success' ? '✓' : '!'}</span>
+            <p>{toast.message}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
