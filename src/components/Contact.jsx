@@ -18,13 +18,13 @@ function Contact() {
 
   const branches = [
     {
-      name: 'Main Branch',
-      address: '251, Nadar Lane, North Perumal Maistry Street, West Masi Street, Madurai-625001',
-      iframeSrc: 'https://www.google.com/maps?q=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001&z=17&output=embed',
-      openLink: 'https://www.google.com/maps/search/?api=1&query=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001',
+      name: 'Arappalayam Branch',
+      address: '125a, Puttu Thoppu Main Rd, Ponnagaram, Mangla Puram, Padi Thurai, Arappalayam, Madurai, Tamil Nadu 625016',
+      iframeSrc: 'https://www.google.com/maps?q=125a,Puttu%20Thoppu%20Main%20Rd,Ponnagaram,Mangla%20Puram,Padi%20Thurai,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
+      openLink: 'https://maps.app.goo.gl/1rMKueyDhjBkb8ec8?g_st=aw',
     },
     {
-      name: 'West Masi Branch',
+      name: 'Main Branch',
       address: '251, N Perumal Maistry St, W Masi St, Madurai Main, Madurai, Tamil Nadu 625001',
       iframeSrc: 'https://www.google.com/maps?q=251,N%20Perumal%20Maistry%20St,W%20Masi%20St,Madurai%20Main,Madurai,Tamil%20Nadu%20625001&z=17&output=embed',
       openLink: 'https://maps.app.goo.gl/SjPoJDsdGqBD1Vci8?g_st=aw',
