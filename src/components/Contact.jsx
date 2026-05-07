@@ -18,23 +18,23 @@ function Contact() {
 
   const branches = [
     {
+      name: 'Main Branch',
+      address: '251, Nadar Lane, North Perumal Maistry Street, West Masi Street, Madurai-625001',
+      mapSrc: 'https://www.google.com/maps?q=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001&z=17&output=embed',
+      openLink: 'https://www.google.com/maps/search/?api=1&query=251,Nadar%20Lane,North%20Perumal%20Maistry%20Street,West%20Masi%20Street,Madurai-625001'
+    },
+    {
+      name: 'West Masi Branch',
+      address: '251, N Perumal Maistry St, W Masi St, Madurai Main, Madurai, Tamil Nadu 625001',
+      mapSrc: 'https://www.google.com/maps?q=251,N%20Perumal%20Maistry%20St,W%20Masi%20St,Madurai%20Main,Madurai,Tamil%20Nadu%20625001&z=17&output=embed',
+      openLink: 'https://maps.app.goo.gl/SjPoJDsdGqBD1Vci8?g_st=aw'
+    },
+    {
       name: 'Arappalayam Branch',
       address: '125a, Puttu Thoppu Main Rd, Ponnagaram, Mangla Puram, Padi Thurai, Arappalayam, Madurai, Tamil Nadu 625016',
-      iframeSrc: 'https://www.google.com/maps?q=125a,Puttu%20Thoppu%20Main%20Rd,Ponnagaram,Mangla%20Puram,Padi%20Thurai,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
-      openLink: 'https://maps.app.goo.gl/1rMKueyDhjBkb8ec8?g_st=aw',
-    },
-    {
-      name: 'Main Branch',
-      address: '251, N Perumal Maistry St, W Masi St, Madurai Main, Madurai, Tamil Nadu 625001',
-      iframeSrc: 'https://www.google.com/maps?q=251,N%20Perumal%20Maistry%20St,W%20Masi%20St,Madurai%20Main,Madurai,Tamil%20Nadu%20625001&z=17&output=embed',
-      openLink: 'https://maps.app.goo.gl/SjPoJDsdGqBD1Vci8?g_st=aw',
-    },
-    {
-      name: 'Arappalayam Branch',
-      address: 'NO 17, Salem - Madurai Rd, Puttuthoppu, Arappalayam, Madurai, Tamil Nadu 625016',
-      iframeSrc: 'https://www.google.com/maps?q=NO%2017,Salem%20-%20Madurai%20Rd,Puttuthoppu,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
-      openLink: 'https://maps.app.goo.gl/EhrW3agDbxy7uvNc7?g_st=aw',
-    },
+      mapSrc: 'https://www.google.com/maps?q=125a,Puttu%20Thoppu%20Main%20Rd,Ponnagaram,Mangla%20Puram,Padi%20Thurai,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
+      openLink: 'https://maps.app.goo.gl/1rMKueyDhjBkb8ec8?g_st=aw'
+    }
   ];
 
   const selectedBranch = branches[selectedBranchIndex];
@@ -122,24 +122,17 @@ function Contact() {
                 <motion.div
                   key={selectedBranch.name}
                   className="branch-map-slide"
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.16}
-                  onDragEnd={(_, info) => {
-                    if (info.offset.x < -70) goToBranch(1);
-                    if (info.offset.x > 70) goToBranch(-1);
-                  }}
                   initial={{ opacity: 0, x: 28 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -28 }}
                   transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <iframe
-                    title={`${selectedBranch.name} location map`}
-                    src={selectedBranch.iframeSrc}
+                    title={`${selectedBranch.name} Location Map`}
+                    src={selectedBranch.mapSrc}
                     loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
                   />
                 </motion.div>
               </AnimatePresence>
