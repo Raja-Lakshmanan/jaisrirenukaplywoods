@@ -8,6 +8,20 @@ import virgo from '../assets/virgo.jpeg'
 import glo from '../assets/gio.jpeg'
 import ivas from '../assets/ivas.png'
 import brown from '../assets/brown.jpg'
+import century from '../assets/century.png'
+import merino from '../assets/merino.png'
+import fine from '../assets/fine.jpg'
+import kit from '../assets/kit.png'
+import saron from '../assets/saron.png'
+import sai from '../assets/sai.png'
+import kan from '../assets/kanb.png'
+import pr from '../assets/pr.png'
+import euro from '../assets/euro.jpg'
+import pebble from '../assets/pebble.png'
+import virMdfLogo from '../assets/images.jpg'
+import actionTesaLogo from '../assets/download.png'
+import greenpanelLogo from '../assets/images (1).png'
+import corelamLogo from '../assets/download (1).png'
 const brandCategories = [
   'All',
   'Main Dealers',
@@ -38,14 +52,28 @@ const brands = [
     name: 'Kitply',
     category: 'Plywood',
     isMainDealer: false,
-    logo: null,
+    logo: kit,
     tag: 'Plywood',
   },
   {
     name: 'Sharon',
     category: 'Plywood',
     isMainDealer: false,
-    logo: null,
+    logo: saron,
+    tag: 'Plywood',
+  },
+  {
+    name: 'Sainik 710',
+    category: 'Plywood',
+    isMainDealer: false,
+    logo: sai,
+    tag: 'Plywood',
+  },
+  {
+    name: 'Fine Plywoods',
+    category: 'Plywood',
+    isMainDealer: false,
+    logo: fine,
     tag: 'Plywood',
   },
   {
@@ -91,73 +119,74 @@ const brands = [
     tag: 'Mica',
   },
   {
-    name: 'Masonite',
+    name: 'Century Laminates',
+    category: 'Veneers',
+    isMainDealer: false,
+    logo: century,
+    tag: 'Veneers',
+  },
+  {
+    name: 'Merino',
+    category: 'Mica',
+    isMainDealer: false,
+    logo: merino,
+    tag: 'Mica',
+  },
+  {
+    name: 'Kan_B',
     category: 'Doors',
     isMainDealer: false,
-    logo: null,
+    logo: kan,
     tag: 'Doors',
   },
   {
-    name: 'Action Tesa',
+    name: 'Pravesh Doors',
+    category: 'Doors',
+    isMainDealer: false,
+    logo: pr,
+    tag: 'Doors',
+  },
+  {
+    name: 'VIR MDF',
     category: 'MDF',
     isMainDealer: false,
-    logo: null,
+    logo: virMdfLogo,
+    tag: 'MDF',
+  },
+  {
+    name: 'Action TESA',
+    category: 'MDF',
+    isMainDealer: false,
+    logo: actionTesaLogo,
     tag: 'MDF',
   },
   {
     name: 'Greenpanel',
     category: 'MDF',
     isMainDealer: false,
-    logo: null,
+    logo: greenpanelLogo,
     tag: 'MDF',
   },
   {
-    name: 'Durian',
-    category: 'Veneers',
+    name: 'CoreLAM',
+    category: 'MDF',
     isMainDealer: false,
-    logo: null,
-    tag: 'Veneers',
+    logo: corelamLogo,
+    tag: 'MDF',
   },
+ 
   {
-    name: 'Natural Veneers',
-    category: 'Veneers',
-    isMainDealer: false,
-    logo: null,
-    tag: 'Veneers',
-  },
-  {
-    name: 'Rehau',
+    name: 'Euro Pratik',
     category: 'Interior',
     isMainDealer: false,
-    logo: null,
+    logo: euro,
     tag: 'Interior',
   },
   {
-    name: 'Hettich',
+    name: 'Pebble',
     category: 'Interior',
     isMainDealer: false,
-    logo: null,
-    tag: 'Interior',
-  },
-  {
-    name: 'Fevicol',
-    category: 'Interior',
-    isMainDealer: false,
-    logo: null,
-    tag: 'Interior',
-  },
-  {
-    name: 'Pidilite',
-    category: 'Interior',
-    isMainDealer: false,
-    logo: null,
-    tag: 'Interior',
-  },
-  {
-    name: 'Ebco',
-    category: 'Interior',
-    isMainDealer: false,
-    logo: null,
+    logo: pebble,
     tag: 'Interior',
   },
 ]
@@ -184,11 +213,15 @@ function Brands() {
         : brands.filter((brand) => brand.category === activeCategory)
   ), [activeCategory])
 
+  const shouldAutoScroll = filteredBrands.length > 4
+
   const repeatedBrands = useMemo(() => (
-    filteredBrands.length > 0
+    shouldAutoScroll && filteredBrands.length > 0
       ? Array.from({ length: brandRepeatCount }, () => filteredBrands).flat()
       : []
-  ), [filteredBrands])
+  ), [filteredBrands, shouldAutoScroll])
+
+  const displayBrands = shouldAutoScroll ? repeatedBrands : filteredBrands
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category)
@@ -213,6 +246,8 @@ function Brands() {
   }
 
   const handleManualScroll = (direction) => {
+    if (!shouldAutoScroll) return
+
     pauseTemporarily()
     const carousel = brandScrollRef.current
     if (!carousel) return
@@ -257,7 +292,7 @@ function Brands() {
     const prefersReducedMotion = typeof window !== 'undefined'
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    if (!carousel || prefersReducedMotion || filteredBrands.length === 0) return undefined
+    if (!shouldAutoScroll || !carousel || prefersReducedMotion || filteredBrands.length === 0) return undefined
 
     const speed = 0.45
 
@@ -288,7 +323,7 @@ function Brands() {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [activeCategory, filteredBrands.length, isPaused])
+  }, [activeCategory, filteredBrands.length, isPaused, shouldAutoScroll])
 
   return (
     <section id="brands" className="section section-dark brands-section">
@@ -313,7 +348,7 @@ function Brands() {
         </div>
 
         <div
-          className="brand-carousel-wrap"
+          className={`brand-carousel-wrap ${shouldAutoScroll ? 'auto-carousel-wrap' : 'static-brands-wrap'}`}
           onMouseEnter={() => {
             isHovering.current = true
             setIsPaused(true)
@@ -330,19 +365,24 @@ function Brands() {
           }}
           onTouchEnd={pauseTemporarily}
         >
-          <button
-            className="brand-arrow brand-arrow-left"
-            type="button"
-            aria-label="Previous brands"
-            onClick={() => handleManualScroll(-1)}
-          >
-            {'\u2039'}
-          </button>
+          {shouldAutoScroll && (
+            <button
+              className="brand-arrow brand-arrow-left"
+              type="button"
+              aria-label="Previous brands"
+              onClick={() => handleManualScroll(-1)}
+            >
+              {'\u2039'}
+            </button>
+          )}
 
-          <div className="brand-scroll-wrapper brand-carousel" ref={brandScrollRef}>
+          <div
+            className={`brand-scroll-wrapper brand-carousel ${shouldAutoScroll ? 'auto-carousel' : 'static-brands'}`}
+            ref={brandScrollRef}
+          >
             <motion.div layout className="brand-grid">
               <AnimatePresence mode="popLayout">
-                {repeatedBrands.map((brand, index) => (
+                {displayBrands.map((brand, index) => (
                   <motion.article
                     layout
                     key={`${brand.name}-${index}`}
@@ -353,7 +393,7 @@ function Brands() {
                     exit={{ opacity: 0, y: -12, scale: 0.98 }}
                     transition={{ ...premiumTransition, delay: (index % filteredBrands.length) * 0.025 }}
                   >
-                    <div className="brand-logo-box" aria-label={`${brand.name} logo placeholder`}>
+                    <div className="brand-logo-box" aria-label={`${brand.name} logo`}>
                       {brand.logo ? (
                         <img src={brand.logo} alt={`${brand.name} logo`} />
                       ) : (
@@ -371,14 +411,16 @@ function Brands() {
             </motion.div>
           </div>
 
-          <button
-            className="brand-arrow brand-arrow-right"
-            type="button"
-            aria-label="Next brands"
-            onClick={() => handleManualScroll(1)}
-          >
-            {'\u203a'}
-          </button>
+          {shouldAutoScroll && (
+            <button
+              className="brand-arrow brand-arrow-right"
+              type="button"
+              aria-label="Next brands"
+              onClick={() => handleManualScroll(1)}
+            >
+              {'\u203a'}
+            </button>
+          )}
         </div>
       </div>
     </section>

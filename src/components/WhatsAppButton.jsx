@@ -17,7 +17,7 @@ function WhatsAppButton() {
 
       <a
         className="float-btn instagram-float"
-        href="#"
+        href="https://www.instagram.com/jaisrirenukaplywoods/"
         target="_blank"
         rel="noreferrer"
         aria-label="Instagram"

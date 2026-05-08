@@ -1,73 +1,72 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FaImage, FaTimes, FaVideo } from 'react-icons/fa'
-
-// ================= GALLERY IMAGE IMPORTS =================
-// import showroom1 from '../assets/gallery/images/showroom1.jpg'
-// import plywood1 from '../assets/gallery/images/plywood1.jpg'
-// import door1 from '../assets/gallery/images/door1.jpg'
-
-// ================= GALLERY VIDEO IMPORTS =================
-// import showroomVideo from '../assets/gallery/videos/showroom-video.mp4'
-// import productVideo from '../assets/gallery/videos/product-demo.mp4'
-
-// Add your real gallery files in:
-// src/assets/gallery/images/
-// src/assets/gallery/videos/
-//
-// Example after adding image:
-// import showroom1 from '../assets/gallery/images/showroom1.jpg'
-//
-// {
-//   id: 1,
-//   type: 'image',
-//   title: 'Showroom Photo',
-//   description: 'Our showroom collection',
-//   src: showroom1,
-//   placeholder: false
-// }
+import { FaImage, FaPlay, FaTimes, FaVideo } from 'react-icons/fa'
+import showroomPhoto1 from '../assets/gallery/images/unnamed.webp'
+import showroomPhoto2 from '../assets/gallery/images/unnamed (1).webp'
+import showroomPhoto3 from '../assets/gallery/images/unnamed (2).webp'
+import showroomPhoto4 from '../assets/gallery/images/unnamed (3).webp'
+import showroomPhoto5 from '../assets/gallery/images/unnamed (4).webp'
+import showroomPhoto6 from '../assets/gallery/images/unnamed (5).webp'
+import showroomVideo from '../assets/gallery/videos/WhatsApp Video 2025-12-23 at 7.17.01 PM.mp4'
+import renukaPlywoodsVideo from '../assets/gallery/videos/Renuka Plywoods.mp4'
 
 const galleryItems = [
   {
     id: 1,
     type: 'image',
     title: 'Showroom Photo',
-    description: 'Add showroom image here',
-    src: null,
-    placeholder: true
+    description: 'Shop display and material collection',
+    src: showroomPhoto1,
   },
   {
     id: 2,
     type: 'image',
     title: 'Product Display',
-    description: 'Add product image here',
-    src: null,
-    placeholder: true
+    description: 'Plywood and interior finishing range',
+    src: showroomPhoto2,
   },
   {
     id: 3,
-    type: 'video',
-    title: 'Showroom Video',
-    description: 'Add showroom video here',
-    src: null,
-    placeholder: true
+    type: 'image',
+    title: 'Material Collection',
+    description: 'Recent shop materials and finishes',
+    src: showroomPhoto3,
   },
-    {
+  {
     id: 4,
-    type: 'images',
+    type: 'image',
     title: 'Showroom Images',
-    description: 'Add showroom images here',
-    src: null,
-    placeholder: true
+    description: 'In-store plywood shop display',
+    src: showroomPhoto4,
   },
-   {
+  {
     id: 5,
     type: 'image',
-    title: 'Product Display',
-    description: 'Add product image here',
-    src: null,
-    placeholder: true
-  }
+    title: 'Interior Finishes',
+    description: 'Finishing inspirations and product views',
+    src: showroomPhoto5,
+  },
+  {
+    id: 6,
+    type: 'image',
+    title: 'Plywood Selection',
+    description: 'Quality plywood and laminate options',
+    src: showroomPhoto6,
+  },
+  {
+    id: 7,
+    type: 'video',
+    title: 'Showroom Video',
+    description: 'A quick look at our showroom',
+    src: showroomVideo,
+  },
+  {
+    id: 8,
+    type: 'video',
+    title: 'Renuka Plywoods Video',
+    description: 'Shop and product highlights',
+    src: renukaPlywoodsVideo,
+  },
 ]
 
 const premiumTransition = {
@@ -84,7 +83,14 @@ function Gallery() {
     }
 
     if (item.src && item.type === 'video') {
-      return <video src={item.src} muted preload="metadata" />
+      return (
+        <>
+          <video src={item.src} muted preload="metadata" />
+          <span className="gallery-play-icon" aria-hidden="true">
+            <FaPlay />
+          </span>
+        </>
+      )
     }
 
     const PlaceholderIcon = item.type === 'video' ? FaVideo : FaImage
@@ -117,16 +123,19 @@ function Gallery() {
   }
 
   return (
-    <section id="gallery" className="section">
+    <section id="gallery" className="section gallery-section">
       <div className="container">
-        <h2>Gallery</h2>
-        <p className="section-lead">Recent shop materials and interior finishing inspirations.</p>
+        <div className="gallery-header">
+          <span className="eyebrow">Showroom Moments</span>
+          <h2>Gallery</h2>
+          <p>Recent shop materials, interior finishes, and showroom highlights from our plywood collection.</p>
+        </div>
         <div className="gallery-grid">
           {galleryItems.map((item, index) => (
             <motion.button
               type="button"
               key={item.id}
-              className="gallery-item"
+              className="gallery-card"
               onClick={() => setSelected(item)}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -136,9 +145,9 @@ function Gallery() {
               <div className="gallery-media">
                 {renderGalleryMedia(item)}
               </div>
-              <div className="gallery-copy">
-                <strong>{item.title}</strong>
-                <span>{item.description}</span>
+              <div className="gallery-overlay">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
               </div>
             </motion.button>
           ))}
@@ -166,6 +175,10 @@ function Gallery() {
               <button type="button" className="modal-close" onClick={() => setSelected(null)}>
                 <FaTimes />
               </button>
+              <div className="modal-caption">
+                <h3>{selected.title}</h3>
+                <p>{selected.description}</p>
+              </div>
               <div className="modal-image">
                 {renderModalMedia()}
               </div>
