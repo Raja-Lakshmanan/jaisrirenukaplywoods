@@ -32,7 +32,7 @@ function Footer() {
         </div>
       </div>
       <p className="copyright">
-        Copyright © {new Date().getFullYear()} Royal Plywood House. All rights reserved.
+        Copyright © {new Date().getFullYear()} Jai Sri Renuka Plywoods. All rights reserved.
       </p>
     </footer>
   )
