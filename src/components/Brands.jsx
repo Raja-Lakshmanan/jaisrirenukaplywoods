@@ -183,6 +183,13 @@ const brands = [
     tag: 'Interior',
   },
   {
+    name: 'Glorio',
+    category: 'Interior',
+    isMainDealer: false,
+    logo: glo,
+    tag: 'Interior',
+  },
+  {
     name: 'Pebble',
     category: 'Interior',
     isMainDealer: false,

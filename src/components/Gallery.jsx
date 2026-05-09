@@ -4,8 +4,8 @@ import { FaImage, FaPlay, FaTimes, FaVideo } from 'react-icons/fa'
 import showroomPhoto1 from '../assets/gallery/images/unnamed.webp'
 import showroomPhoto2 from '../assets/gallery/images/unnamed (1).webp'
 import showroomPhoto3 from '../assets/gallery/images/unnamed (2).webp'
-import showroomPhoto4 from '../assets/gallery/images/unnamed (3).webp'
-import showroomPhoto5 from '../assets/gallery/images/unnamed (4).webp'
+import showroomPhoto4 from '../assets/gallery/images/unnamed(6).jpg'
+import showroomPhoto5 from '../assets/gallery/images/unnamed(7).jpg'
 import showroomPhoto6 from '../assets/gallery/images/unnamed (5).webp'
 import showroomVideo from '../assets/gallery/videos/WhatsApp Video 2025-12-23 at 7.17.01 PM.mp4'
 import renukaPlywoodsVideo from '../assets/gallery/videos/Renuka Plywoods.mp4'
@@ -16,21 +16,21 @@ const galleryItems = [
     type: 'image',
     title: 'Showroom Photo',
     description: 'Shop display and material collection',
-    src: showroomPhoto1,
+    src: showroomPhoto2,
   },
   {
     id: 2,
     type: 'image',
     title: 'Product Display',
     description: 'Plywood and interior finishing range',
-    src: showroomPhoto2,
+    src: showroomPhoto3,
   },
   {
     id: 3,
     type: 'image',
     title: 'Material Collection',
     description: 'Recent shop materials and finishes',
-    src: showroomPhoto3,
+    src: showroomPhoto1,
   },
   {
     id: 4,
@@ -44,14 +44,14 @@ const galleryItems = [
     type: 'image',
     title: 'Interior Finishes',
     description: 'Finishing inspirations and product views',
-    src: showroomPhoto5,
+    src: showroomPhoto6,
   },
   {
     id: 6,
     type: 'image',
     title: 'Plywood Selection',
     description: 'Quality plywood and laminate options',
-    src: showroomPhoto6,
+    src: showroomPhoto5,
   },
   {
     id: 7,
@@ -76,6 +76,10 @@ const premiumTransition = {
 
 function Gallery() {
   const [selected, setSelected] = useState(null)
+  const sortedGalleryItems = [
+    ...galleryItems.filter((item) => item.type === 'video'),
+    ...galleryItems.filter((item) => item.type === 'image'),
+  ]
 
   const renderGalleryMedia = (item) => {
     if (item.src && item.type === 'image') {
@@ -130,7 +134,7 @@ function Gallery() {
           <p>Recent shop materials, interior finishes, and showroom highlights from our plywood collection.</p>
         </div>
         <div className="gallery-grid">
-          {galleryItems.map((item, index) => (
+          {sortedGalleryItems.map((item, index) => (
             <motion.button
               type="button"
               key={item.id}
