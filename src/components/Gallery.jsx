@@ -126,7 +126,6 @@ function Gallery() {
     <section id="gallery" className="section gallery-section">
       <div className="container">
         <div className="gallery-header">
-          <span className="eyebrow">Showroom Moments</span>
           <h2>Gallery</h2>
           <p>Recent shop materials, interior finishes, and showroom highlights from our plywood collection.</p>
         </div>
