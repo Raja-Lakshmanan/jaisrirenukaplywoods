@@ -68,11 +68,17 @@ function Hero() {
             and commercial spaces.
           </p>
           <div className="hero-actions">
-            <a href="tel:+918489719447" className="btn btn-gold">
+            <a href="tel:+918489719447" className="btn btn-gold" aria-label="Call Jai Sri Renuka Plywoods">
               <FaPhoneAlt />
               Call Now
             </a>
-            <a href="https://wa.me/918489719447" className="btn btn-outline" target="_blank" rel="noreferrer">
+            <a
+              href="https://wa.me/918489719447"
+              className="btn btn-outline"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Chat with Jai Sri Renuka Plywoods on WhatsApp"
+            >
               <FaWhatsapp />
               WhatsApp
             </a>

@@ -137,10 +137,10 @@ function Contact() {
                   <p>{person.phone}</p>
                 </div>
                 <div className="person-actions">
-                  <a href={person.callLink}>
+                  <a href={person.callLink} aria-label={`Call ${person.name}`}>
                     <FaPhoneAlt /> Call
                   </a>
-                  <a href={person.whatsappLink} target="_blank" rel="noreferrer">
+                  <a href={person.whatsappLink} target="_blank" rel="noreferrer" aria-label={`Chat with ${person.name} on WhatsApp`}>
                     <FaWhatsapp /> WhatsApp
                   </a>
                 </div>
@@ -158,7 +158,13 @@ function Contact() {
               </div>
             ))}
           </div>
-          <a href="https://wa.me/918489719447" className="btn btn-gold" target="_blank" rel="noreferrer">
+          <a
+            href="https://wa.me/918489719447"
+            className="btn btn-gold"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Chat with Jai Sri Renuka Plywoods on WhatsApp"
+          >
             <FaWhatsapp /> Chat on WhatsApp
           </a>
         </motion.div>
@@ -193,7 +199,7 @@ function Contact() {
               <label htmlFor="message">Message</label>
               <textarea id="message" rows="5" type='text' name='message' placeholder="Tell us your requirement" required />
             </div>
-            <button type="submit" className="btn btn-gold" disabled={sending}>
+            <button type="submit" className="btn btn-gold" disabled={sending} aria-label="Send enquiry">
               {sending ? 'Sending...' : 'Send Enquiry'}
             </button>
           </motion.form>
@@ -265,6 +271,7 @@ function Contact() {
             className="btn btn-outline map-open-btn"
             target="_blank"
             rel="noreferrer"
+            aria-label={`Open ${selectedBranch.name} in Google Maps`}
           >
             Open in Google Maps
           </a>
