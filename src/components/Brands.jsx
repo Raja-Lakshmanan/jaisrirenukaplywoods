@@ -22,6 +22,8 @@ import virMdfLogo from '../assets/images.jpg'
 import actionTesaLogo from '../assets/download.png'
 import greenpanelLogo from '../assets/images (1).png'
 import corelamLogo from '../assets/download (1).png'
+import rel from '../assets/relwood_logo.jpg'
+import pare from '../assets/pare.webp'
 const brandCategories = [
   'All',
   'Main Dealers',
@@ -194,6 +196,20 @@ const brands = [
     category: 'Interior',
     isMainDealer: false,
     logo: pebble,
+    tag: 'Interior',
+  },
+  {
+    name: 'Relwood',
+    category: 'Interior',
+    isMainDealer: false,
+    logo: rel,
+    tag: 'Interior',
+  },
+  {
+    name: 'Pare',
+    category: 'Interior',
+    isMainDealer: false,
+    logo: pare,
     tag: 'Interior',
   },
 ]

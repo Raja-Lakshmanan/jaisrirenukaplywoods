@@ -24,17 +24,38 @@ function Contact() {
       openLink: 'https://maps.app.goo.gl/XbKVdu3P4uGNWe5s5?g_st=aw'
     },
     {
-      name: 'Arapalayam Branch',
-      address: 'NO 17, Salem - Madurai Rd, Puttuthoppu, Arappalayam, Madurai, Tamil Nadu 625016',
-      mapSrc: 'https://www.google.com/maps?q=NO%2017,Salem%20-%20Madurai%20Rd,Puttuthoppu,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
-      openLink: 'https://maps.app.goo.gl/kYEsYKzW7sg63erMA?g_st=aw'
-    },
-    {
       name: 'Puttu Thoppu Branch',
-      address: '125a, Puttu Thoppu Main Rd, Ponnagaram, Mangla Puram, Padi Thurai, Arappalayam, Madurai, Tamil Nadu 625016',
+      address: '125a, Puttu Thoppu Main Rd, Arappalayam, Madurai, Tamil Nadu 625016',
       mapSrc: 'https://www.google.com/maps?q=125a,Puttu%20Thoppu%20Main%20Rd,Ponnagaram,Mangla%20Puram,Padi%20Thurai,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
       openLink: 'https://maps.app.goo.gl/Mb1ScBkpcJVDuCtq6?g_st=aw'
+    },
+    {
+      name: 'Arappalayam Branch',
+      address: 'NO 17, Arappalayam main road, Madurai, Tamil Nadu 625016',
+      mapSrc: 'https://www.google.com/maps?q=NO%2017,Salem%20-%20Madurai%20Rd,Puttuthoppu,Arappalayam,Madurai,Tamil%20Nadu%20625016&z=17&output=embed',
+      openLink: 'https://maps.app.goo.gl/kYEsYKzW7sg63erMA?g_st=aw'
     }
+  ];
+
+  const contactPersons = [
+    {
+      name: 'P Gopinath',
+      phone: '9894017095',
+      callLink: 'tel:+919894017095',
+      whatsappLink: 'https://wa.me/919894017095',
+    },
+    {
+      name: 'B Praveen Kumar',
+      phone: '8489719447',
+      callLink: 'tel:+918489719447',
+      whatsappLink: 'https://wa.me/918489719447',
+    },
+    {
+      name: 'S Vinoth Babu',
+      phone: '9940013848',
+      callLink: 'tel:+919940013848',
+      whatsappLink: 'https://wa.me/919940013848',
+    },
   ];
 
   const selectedBranch = branches[selectedBranchIndex];
@@ -91,9 +112,10 @@ function Contact() {
   };
 
   return (
-    <section id="contact" className="section">
-      <div className="container contact-grid">
+    <section id="contact" className="section contact-section">
+      <div className="container contact-layout">
         <motion.div
+          className="contact-left"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -103,19 +125,78 @@ function Contact() {
           <p className="section-lead">Get product assistance, quotations, and quick delivery support.</p>
           <ul className="contact-list">
             <li>
-              <FaMapMarkerAlt /> 251, Nadar Lane, North Perumal Maistry Street, West Masi Street, Madurai-625001
-            </li>
-            <li>
-              <FaPhoneAlt /> P Gopinath-9894017095
-            </li>
-            <li>
               <MdEmail />
               <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jairenukaplywoods@gmail.com&su=Product%20Enquiry%20-%20Royal%20Plywood%20House&body=Hello%20Royal%20Plywood%20House,%0D%0A%0D%0AI%20want%20to%20know%20about%20your%20plywood%20products." target='_blank'>jairenukaplywoods@gmail.com</a>
             </li>
           </ul>
-          <a href="https://wa.me/919894017095" className="btn btn-gold" target="_blank" rel="noreferrer">
+          <div className="contact-persons">
+            {contactPersons.map((person) => (
+              <div className="contact-person-card" key={person.phone}>
+                <div>
+                  <h4>{person.name}</h4>
+                  <p>{person.phone}</p>
+                </div>
+                <div className="person-actions">
+                  <a href={person.callLink}>
+                    <FaPhoneAlt /> Call
+                  </a>
+                  <a href={person.whatsappLink} target="_blank" rel="noreferrer">
+                    <FaWhatsapp /> WhatsApp
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="branch-address-list">
+            {branches.map((branch) => (
+              <div className="branch-address-card" key={`${branch.name}-card`}>
+                <h4>
+                  <FaMapMarkerAlt />
+                  {branch.name}
+                </h4>
+                <p>{branch.address}</p>
+              </div>
+            ))}
+          </div>
+          <a href="https://wa.me/918489719447" className="btn btn-gold" target="_blank" rel="noreferrer">
             <FaWhatsapp /> Chat on WhatsApp
           </a>
+        </motion.div>
+
+        <motion.div
+          className="contact-right"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ ...premiumTransition, delay: 0.08 }}
+        >
+          <motion.form
+            className="contact-form"
+            ref={form}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ ...premiumTransition, delay: 0.08 }}
+            onSubmit={sendEmail}
+          >
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input id="name" type="text" name='name' placeholder="Enter your name" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input id="email" type="email" name='email' placeholder="Enter Email Address" required />
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">Message</label>
+              <textarea id="message" rows="5" type='text' name='message' placeholder="Tell us your requirement" required />
+            </div>
+            <button type="submit" className="btn btn-gold" disabled={sending}>
+              {sending ? 'Sending...' : 'Send Enquiry'}
+            </button>
+          </motion.form>
           <div className="map-placeholder branch-map-card">
             <div className="branch-map-viewport">
               <AnimatePresence mode="wait">
@@ -188,50 +269,6 @@ function Contact() {
             Open in Google Maps
           </a>
         </motion.div>
-
-        <motion.form
-          className="contact-form"
-          ref={form}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ ...premiumTransition, delay: 0.08 }}
-          onSubmit={sendEmail}
-        >
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input id="name" type="text" name='name' placeholder="Enter your name" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input id="email" type="email" name='email' placeholder="Enter Email Address" required />
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="message">Message</label>
-            <textarea id="message" rows="5" type='text' name='message' placeholder="Tell us your requirement" required />
-          </div>
-          <button type="submit" className="btn btn-gold" disabled={sending}>
-            {sending ? 'Sending...' : 'Send Enquiry'}
-          </button>
-          <div className="contact-helper desktop-only">
-            <span className="helper-badge">Expert Assistance</span>
-            <h4>Need help choosing the right material?</h4>
-            <p>
-              Share your requirement and our team will guide you with suitable plywood,
-              laminates, doors, MDF boards, and interior materials.
-            </p>
-            <div className="helper-points">
-              <span>Product Guidance</span>
-              <span>Quick Quotation</span>
-              <span>Delivery Support</span>
-            </div>
-            <a href="https://wa.me/919894017095" target="_blank" rel="noreferrer">
-              Need urgent help? Chat on WhatsApp
-            </a>
-          </div>
-        </motion.form>
       </div>
       <AnimatePresence>
         {toast && (

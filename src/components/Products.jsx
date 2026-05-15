@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
+import mica from '../assets/mica.png'
+import mdf from '../assets/mdf boards.webp'
+import com from '../assets/commercial.jpg'
+import  water from '../assets/water.jpg'
 
 const filters = ['All', 'Plywood', 'MDF Boards', 'Laminates', 'Doors', 'Interior Panels']
 
@@ -9,10 +13,10 @@ const premiumTransition = {
 }
 
 const products = [
-  { image: 'https://5.imimg.com/data5/KA/RX/MY-56969114/plywood-500x500.jpg', name: 'Commercial Plywood', category: 'Plywood', desc: 'Reliable and budget-friendly sheets for daily interior works.' },
-  { image: 'https://images.pexels.com/photos/7675065/pexels-photo-7675065.jpeg', name: 'Waterproof Plywood', category: 'Plywood', desc: 'Engineered for durability in high-humidity spaces.' },
-  { image: 'https://tse2.mm.bing.net/th/id/OIP.XZ9CG7W7EFAMJ5I-dCJGRAHaHa?pid=Api&P=0&h=220', name: 'MDF Boards', category: 'MDF Boards', desc: 'Smooth, dense board ideal for routing and furniture finishing.' },
-  { image: 'https://tse4.mm.bing.net/th/id/OIP.J5zyE-P8tEalWZGI2HuDTQHaHa?pid=Api&P=0&h=220', name: 'Laminates / Mica', category: 'Laminates', desc: 'Decorative and scratch-resistant surface sheets.' },
+  { image: com, name: 'Commercial Plywood', category: 'Plywood', desc: 'Reliable and budget-friendly sheets for daily interior works.' },
+  { image: water, name: 'Waterproof Plywood', category: 'Plywood', desc: 'Engineered for durability in high-humidity spaces.' },
+  { image: mdf, name: 'MDF Boards', category: 'MDF Boards', desc: 'Smooth, dense board ideal for routing and furniture finishing.' },
+  { image: mica, name: 'Laminates / Mica', category: 'Laminates', desc: 'Decorative and scratch-resistant surface sheets.' },
   { image: 'https://tse2.mm.bing.net/th/id/OIP.2J0D5rMb0EY-PxKr_R2FegHaHa?pid=Api&h=220&P=0', name: 'Entrance Doors', category: 'Doors', desc: 'Strong, weather-resistant entrance door solutions with premium style and durability.' },
   { image: 'https://tse2.mm.bing.net/th/id/OIP._cn1OI5EJ7tztCYuzTx4IwHaHa?pid=Api&h=220&P=0', name: 'Bedroom Doors', category: 'Doors', desc: 'Elegant, termite-resistant bedroom door solutions for modern interiors.' },
   { image: 'https://tse2.mm.bing.net/th/id/OIP.ct7-jPDt5-dIZx9toWugYAHaFM?pid=Api&P=0&h=220', name: 'WPC Doors', category: 'Doors', desc: 'Termite-proof, water-resistant modern door solutions.' },

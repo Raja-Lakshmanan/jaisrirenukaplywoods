@@ -15,26 +15,39 @@ const doorSpring = {
 
 function Hero() {
   const heroRef = useRef(null)
+  const [isDesktop, setIsDesktop] = useState(() => window.matchMedia('(min-width: 1024px)').matches)
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 620px)').matches)
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   })
-  const leftDoorRotate = useSpring(useTransform(scrollYProgress, [0, 0.18], [0, -72]), doorSpring)
-  const rightDoorRotate = useSpring(useTransform(scrollYProgress, [0, 0.18], [0, 72]), doorSpring)
+  const doorOpenRange = isDesktop ? 0.07 : 0.18
+  const doorFadeStart = isDesktop ? 0.08 : 0.12
+  const doorFadeEnd = isDesktop ? 0.16 : 0.28
+  const revealStart = isDesktop ? 0.025 : 0.16
+  const revealEnd = isDesktop ? 0.08 : 0.32
+  const lightEnd = isDesktop ? 0.12 : 0.24
+  const leftDoorRotate = useSpring(useTransform(scrollYProgress, [0, doorOpenRange], [0, -72]), doorSpring)
+  const rightDoorRotate = useSpring(useTransform(scrollYProgress, [0, doorOpenRange], [0, 72]), doorSpring)
   const leftDoorX = useSpring(useTransform(scrollYProgress, [0, 0.18], ['0%', '-72%']), doorSpring)
   const rightDoorX = useSpring(useTransform(scrollYProgress, [0, 0.18], ['0%', '72%']), doorSpring)
-  const doorOpacity = useSpring(useTransform(scrollYProgress, [0.12, 0.28], [1, 0]), doorSpring)
-  const revealOpacity = useSpring(useTransform(scrollYProgress, [0.16, 0.32], [0, 1]), doorSpring)
-  const revealY = useSpring(useTransform(scrollYProgress, [0.16, 0.32], [24, 0]), doorSpring)
-  const lightScale = useSpring(useTransform(scrollYProgress, [0, 0.24], [0.86, 1.14]), doorSpring)
-  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 620px)').matches)
+  const doorOpacity = useSpring(useTransform(scrollYProgress, [doorFadeStart, doorFadeEnd], [1, 0]), doorSpring)
+  const revealOpacity = useSpring(useTransform(scrollYProgress, [revealStart, revealEnd], [0, 1]), doorSpring)
+  const revealY = useSpring(useTransform(scrollYProgress, [revealStart, revealEnd], [24, 0]), doorSpring)
+  const lightScale = useSpring(useTransform(scrollYProgress, [0, lightEnd], [0.86, 1.14]), doorSpring)
 
   useEffect(() => {
+    const desktopQuery = window.matchMedia('(min-width: 1024px)')
     const mediaQuery = window.matchMedia('(max-width: 620px)')
+    const updateDesktopState = (event) => setIsDesktop(event.matches)
     const updateMobileState = (event) => setIsMobile(event.matches)
 
+    desktopQuery.addEventListener('change', updateDesktopState)
     mediaQuery.addEventListener('change', updateMobileState)
-    return () => mediaQuery.removeEventListener('change', updateMobileState)
+    return () => {
+      desktopQuery.removeEventListener('change', updateDesktopState)
+      mediaQuery.removeEventListener('change', updateMobileState)
+    }
   }, [])
 
   return (
@@ -55,11 +68,11 @@ function Hero() {
             and commercial spaces.
           </p>
           <div className="hero-actions">
-            <a href="tel:+919894017095" className="btn btn-gold">
+            <a href="tel:+918489719447" className="btn btn-gold">
               <FaPhoneAlt />
               Call Now
             </a>
-            <a href="https://wa.me/919894017095" className="btn btn-outline" target="_blank" rel="noreferrer">
+            <a href="https://wa.me/918489719447" className="btn btn-outline" target="_blank" rel="noreferrer">
               <FaWhatsapp />
               WhatsApp
             </a>
