@@ -62,10 +62,10 @@ function Hero() {
           transition={{ ...premiumTransition, duration: 0.85 }}
         >
           <p className="eyebrow">Premium Materials for Modern Interiors</p>
-          <h1>Premium Plywoods &amp; Interior Materials</h1>
+          <h1>Jai Sri Renuka Plywoods</h1>
           <p>
-            Quality plywood, laminates, doors, MDF boards, and interior solutions for homes, offices,
-            and commercial spaces.
+            Plywood shop in Madurai offering MDF boards, laminates, veneers, wooden doors, PVC sheets,
+            louvers, adhesives, charco panels, acrylic mica, wooden floorings, and interior materials.
           </p>
           <div className="hero-actions">
             <a href="tel:+918489719447" className="btn btn-gold" aria-label="Call Jai Sri Renuka Plywoods">
