@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
-    <loc>https://Raja-Lakshmanan.github.io/jaisrirenukaplywoods/</loc>
+    <loc>https://jaisrirenukaplywoods.vercel.app/</loc>
+    <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://Raja-Lakshmanan.github.io/jaisrirenukaplywoods/#about</loc>
-  </url>
-  <url>
-    <loc>https://Raja-Lakshmanan.github.io/jaisrirenukaplywoods/#products</loc>
-  </url>
-  <url>
-    <loc>https://Raja-Lakshmanan.github.io/jaisrirenukaplywoods/#brands</loc>
-  </url>
-  <url>
-    <loc>https://Raja-Lakshmanan.github.io/jaisrirenukaplywoods/#gallery</loc>
-  </url>
-  <url>
-    <loc>https://Raja-Lakshmanan.github.io/jaisrirenukaplywoods/#contact</loc>
-  </url>
+
 </urlset>
