@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { HiMenuAlt3, HiX } from 'react-icons/hi'
-import logo from '../assets/nlo.png'
+import logo from '../assets/logo3.png'
 
 const navLinks = ['Home', 'About', 'Products', 'Brands', 'Gallery', 'Contact']
 

@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import mica from '../assets/mica.png'
 import mdf from '../assets/mdf boards.webp'
-import com from '../assets/commercial.jpg'
+import com from '../assets/m.webp'
 import  water from '../assets/water.jpg'
 
 const filters = ['All', 'Plywood', 'MDF Boards', 'Laminates', 'Doors', 'Interior Panels']
