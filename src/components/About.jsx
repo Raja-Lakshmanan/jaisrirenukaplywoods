@@ -32,8 +32,10 @@ function About() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ ...premiumTransition, delay: 0.06 }}
         >
-          We supply high-quality plywood, laminates, MDF boards, doors, adhesives, and interior materials
-          for residences, offices, and commercial spaces with dependable service and practical guidance.
+          Jai Sri Renuka Plywoods is a plywood shop in Madurai supplying plywoods, MDF boards, laminates,
+          mica, veneers, wooden doors, PVC sheets, louvers, adhesives, charco panels, acrylic mica,
+          wooden floorings, and interior materials for homes, offices, and commercial spaces near West
+          Masi Street and Arappalayam.
         </motion.p>
         <div className="about-grid">
           {trustCards.map((card, index) => (
